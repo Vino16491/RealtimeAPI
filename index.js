@@ -16,6 +16,13 @@ mongoose.connect(db, {
     (err) ? console.log('err in connection' + err): console.log('db connected')
 });
 
+
+const Schema = mongoose.Schema;
+const dataSchema = new Schema({
+    data: Object
+});
+
+const data = mongoose.model('data', dataSchema, "realtime");
 /* ***************************************************** */
 
 /* Express + Socket API setup */
@@ -34,14 +41,30 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/getRealtime', (req, res) => {res.status(200).json({msg: 'get recd'})});
-app.post('/postRealtime', (req, res) => {res.status(200).json({msg: 'post recd'})});
-app.put('/putRealtime', (req, res) => {res.status(200).json({msg: 'put recd'})});
-app.delete('/delRealtime', (req, res) => {res.status(200).json({msg: 'del recd'})});
+app.get('/getRealtime', (req, res) => {
+    res.status(200).json({
+        msg: 'get recd'
+    })
+});
+app.post('/postRealtime', (req, res) => {
+    res.status(200).json({
+        msg: 'post recd'
+    })
+});
+app.put('/putRealtime', (req, res) => {
+    res.status(200).json({
+        msg: 'put recd'
+    })
+});
+app.delete('/delRealtime', (req, res) => {
+    res.status(200).json({
+        msg: 'del recd'
+    })
+});
 
 /* ***************************************************************************************** */
 
 /* Server listen */
-app.listen(process.env.PORT || 4000, function(){
+app.listen(process.env.PORT || 4000, function () {
     console.log('Your node js server is running');
-  });
+});
