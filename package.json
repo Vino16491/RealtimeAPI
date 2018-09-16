@@ -1,0 +1,32 @@
+{
+  "name": "realtimeapi",
+  "version": "1.0.0",
+  "description": "realtime api for crudapp using node, mongo, express and socket",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vino16491/RealtimeAPI.git"
+  },
+  "keywords": [
+    "node",
+    "socket",
+    "mongo",
+    "express"
+  ],
+  "author": "vinod",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Vino16491/RealtimeAPI/issues"
+  },
+  "homepage": "https://github.com/Vino16491/RealtimeAPI#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.15",
+    "socket.io": "^2.1.1"
+  }
+}
