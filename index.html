@@ -61,12 +61,19 @@
                 return false;
             });
             socket.on('msg', function (msg) {
-                $('#messages').append($('<li>').text(JSON.stringify(msg)));
+                $('#messages').append($('<li>').text(JSON.stringify(msg.data)));
             });
-        });
-    </script>
-    <script>
-        var socket = io();
+
+            $(document).ready(() => {
+                socket.emit('msgHistory')
+            });
+            socket.on('msgHistory', (msg) => {
+                msg.forEach(m => {
+                    $('#messages').append($('<li>').text(JSON.stringify(m.data)))    
+                });
+                
+            });
+        })
     </script>
 </head>
 

@@ -105,6 +105,16 @@ io.on('connection', (socket) => {
             }
             return io.emit('msg', result);
         })
+    });
+
+    socket.on('msgHistory', ()=>{
+        console.log('msghistory')
+        Data.find().exec((err, msg)=>{
+            if(err){
+                return io.emit('msgHistory', err)
+            }
+            return io.emit('msgHistory', msg)
+        })
     })
 })
 
