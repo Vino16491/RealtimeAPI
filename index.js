@@ -22,7 +22,7 @@ const dataSchema = new Schema({
     data: Object
 });
 
-const data = mongoose.model('data', dataSchema, "realtime");
+const Data = mongoose.model('data', dataSchema, "realtime");
 /* ***************************************************** */
 
 /* Express + Socket API setup */
@@ -40,22 +40,40 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', "POST, GET, PATCH, DELETE, OPTIONS");
     next();
 });
-
+/* Get Request */
 app.get('/getRealtime', (req, res) => {
+
     res.status(200).json({
         msg: 'get recd'
     })
 });
+/* Post Request */
 app.post('/postRealtime', (req, res) => {
-    res.status(200).json({
-        msg: 'post recd'
+    let data = new Data({
+        data: req.body.content,
     })
+
+    data.save((err, result) => {
+        if (err) {
+         return   res.status(500).json({
+                e: err
+            })
+        }
+        res.status(201).json({
+            msg: result
+        })
+    })
+    // res.status(200).json({
+    //     msg: 'post recd'
+    // })
 });
+/* PUT Request  */
 app.put('/putRealtime', (req, res) => {
     res.status(200).json({
         msg: 'put recd'
     })
 });
+/* Delete Request */
 app.delete('/delRealtime', (req, res) => {
     res.status(200).json({
         msg: 'del recd'
