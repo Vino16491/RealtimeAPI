@@ -1,7 +1,9 @@
 /* All required import for api construction */
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
-const io = require('socket.io');
+const http = require('http').Server(app)
+const io = require('socket.io')(http);
 const mongoose = require('mongoose');
 const dbConnect = require('./dbconnect');
 /* *************************************************** */
@@ -26,7 +28,6 @@ const Data = mongoose.model('data', dataSchema, "realtime");
 /* ***************************************************** */
 
 /* Express + Socket API setup */
-const app = express();
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -50,12 +51,15 @@ app.get('/getRealtime', (req, res) => {
 /* Post Request */
 app.post('/postRealtime', (req, res) => {
     let data = new Data({
-        data: req.body.content,
+        data: {
+            msg: req.body.content,
+            date: new Date()
+        }
     })
 
     data.save((err, result) => {
         if (err) {
-         return   res.status(500).json({
+            return res.status(500).json({
                 e: err
             })
         }
@@ -82,7 +86,29 @@ app.delete('/delRealtime', (req, res) => {
 
 /* ***************************************************************************************** */
 
+/* Socket Updates */
+io.on('connection', (socket) => {
+    console.log('socket connected')
+    socket.on('msg', (msg) => {
+        let socketData = new Data({
+            data: msg
+        });
+
+        socketData.save((err, result) => {
+            if (err) {
+                return io.emit('msgErr', err)
+            }
+            return io.emit('msg', result);
+        })
+    })
+})
+
+
+/* *************************************** */
+
 /* Server listen */
 app.listen(process.env.PORT || 4000, function () {
     console.log('Your node js server is running');
 });
+
+// http.listen(2000, ()=>console.log('listen on 2000'))
