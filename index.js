@@ -42,6 +42,11 @@ app.use((req, res, next) => {
     next();
 });
 /* Get Request */
+/* File to test socket */
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+});
+
 app.get('/getRealtime', (req, res) => {
 
     res.status(200).json({
@@ -107,7 +112,7 @@ io.on('connection', (socket) => {
 /* *************************************** */
 
 /* Server listen */
-app.listen(process.env.PORT || 4000, function () {
+http.listen(process.env.PORT || 4000, function () {
     console.log('Your node js server is running');
 });
 
