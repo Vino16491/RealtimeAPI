@@ -61,7 +61,7 @@
                 return false;
             });
             socket.on('msg', function (msg) {
-                $('#messages').append($('<li>').json(msg));
+                $('#messages').append($('<li>').text(JSON.stringify(msg)));
             });
         });
     </script>
