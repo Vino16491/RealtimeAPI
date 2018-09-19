@@ -125,5 +125,3 @@ io.on('connection', (socket) => {
 http.listen(process.env.PORT || 4000, function () {
     console.log('Your node js server is running');
 });
-
-// http.listen(2000, ()=>console.log('listen on 2000'))
