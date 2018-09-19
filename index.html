@@ -4,84 +4,36 @@
 <head>
     <title>Socket.IO chat</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font: 13px Helvetica, Arial;
-        }
-
-        form {
-            background: #000;
-            padding: 3px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        form input {
-            border: 0;
-            padding: 10px;
-            width: 90%;
-            margin-right: .5%;
-        }
-
-        form button {
-            width: 9%;
-            background: rgb(130, 224, 255);
-            border: none;
-            padding: 10px;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #messages li {
-            padding: 5px 10px;
-        }
-
-        #messages li:nth-child(odd) {
-            background: #eee;
-        }
     </style>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        $(function () {
-            var socket = io();
-            $('form').submit(function () {
-                socket.emit('msg', $('#m').val());
-                $('#m').val('');
-                return false;
-            });
-            socket.on('msg', function (msg) {
-                $('#messages').append($('<li>').text(JSON.stringify(msg.data)));
-            });
-
-            $(document).ready(() => {
-                socket.emit('msgHistory')
-            });
-            socket.on('msgHistory', (msg) => {
-                msg.forEach(m => {
-                    $('#messages').append($('<li>').text(JSON.stringify(m.data)))    
-                });
-                
-            });
-        })
     </script>
 </head>
 
 <body>
-    <ul id="messages"></ul>
-    <form action="">
-        <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <div>
+        <label for='create'>Create</label>
+        <input onkeyup="create()">
+    </div>
+
+    <div>
+        <label for="read" id="read">
+
+        </label>
+    </div>
+    <div>
+        <label for="update">
+
+        </label>
+        <input onkeyup="update()" id="update">
+    </div>
+    <div>
+        <label for="delete">
+
+        </label>
+        <input onkeyup="deleteData()" id="update">
+    </div>
 </body>
 
 </html>
