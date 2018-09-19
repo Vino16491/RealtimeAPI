@@ -43,51 +43,51 @@ app.use((req, res, next) => {
 });
 /* Get Request */
 /* File to test socket */
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
+// app.get('/', function (req, res) {
+//     res.sendFile(__dirname + '/index.html');
+// });
 
-app.get('/getRealtime', (req, res) => {
+// app.get('/getRealtime', (req, res) => {
 
-    res.status(200).json({
-        msg: 'get recd'
-    })
-});
-/* Post Request */
-app.post('/postRealtime', (req, res) => {
-    let data = new Data({
-        data: {
-            msg: req.body.content,
-            date: new Date()
-        }
-    })
+//     res.status(200).json({
+//         msg: 'get recd'
+//     })
+// });
+// /* Post Request */
+// app.post('/postRealtime', (req, res) => {
+//     let data = new Data({
+//         data: {
+//             msg: req.body.content,
+//             date: new Date()
+//         }
+//     })
 
-    data.save((err, result) => {
-        if (err) {
-            return res.status(500).json({
-                e: err
-            })
-        }
-        res.status(201).json({
-            msg: result
-        })
-    })
-    // res.status(200).json({
-    //     msg: 'post recd'
-    // })
-});
-/* PUT Request  */
-app.put('/putRealtime', (req, res) => {
-    res.status(200).json({
-        msg: 'put recd'
-    })
-});
-/* Delete Request */
-app.delete('/delRealtime', (req, res) => {
-    res.status(200).json({
-        msg: 'del recd'
-    })
-});
+//     data.save((err, result) => {
+//         if (err) {
+//             return res.status(500).json({
+//                 e: err
+//             })
+//         }
+//         res.status(201).json({
+//             msg: result
+//         })
+//     })
+//     // res.status(200).json({
+//     //     msg: 'post recd'
+//     // })
+// });
+// /* PUT Request  */
+// app.put('/putRealtime', (req, res) => {
+//     res.status(200).json({
+//         msg: 'put recd'
+//     })
+// });
+// /* Delete Request */
+// app.delete('/delRealtime', (req, res) => {
+//     res.status(200).json({
+//         msg: 'del recd'
+//     })
+// });
 
 /* ***************************************************************************************** */
 
