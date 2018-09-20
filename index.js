@@ -118,7 +118,7 @@ io.on('connection', (socket) => {
         })
     })
 
-    socket.once('dataSave', (data)=>{
+    socket.on('dataSave', (data)=>{
         let socketData = new Data({
             data: data
         });
