@@ -25,17 +25,19 @@
 
             socket.on('datainput', (data) => {
                 console.log(data);
-               
-                 document.getElementById('dataView').innerHTML= 
+               if(data.email !== undefined || data.email !== null){
+                document.getElementById('dataView').innerHTML= 
                      `
-                        <li>hi, Your email id is this ${data.data.email} </li>
-                        <li>Your Day 1 Work is ${data.data.d1}</li>
-                        <li>Your Day 2 Work is ${data.data.d2}</li>
-                        <li>Your Day 3 Work is ${data.data.d3}</li>
-                        <li>Your Day 4 Work is ${data.data.d4}</li>                
+                        <li>hi, Your email id is this ${data.email} </li>
+                        <li>Your Day 1 Work is ${data.d1}</li>
+                        <li>Your Day 2 Work is ${data.d2}</li>
+                        <li>Your Day 3 Work is ${data.d3}</li>
+                        <li>Your Day 4 Work is ${data.d4}</li>                
                     `;
                 
-                
+               }
+                 
+                chart(data)
 
 
             });
@@ -59,14 +61,48 @@
                 listenServer();
            return socket.emit('dataSave', data)
           
-            
+        }
 
-
+        function chart(chartdata){
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var options={
+                
+                
+            };
+            var myDoughnutChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+        labels: ["Day 1", "Day 2", "Day 3", "Day 4"],
+        datasets: [{
+            label: '# of Votes',
+            data: [Number(chartdata.d1), Number(chartdata.d2),Number(chartdata.d3),Number(chartdata.d4),],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+            });
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 
 <body>
+    <div style="height:120px; width:120px">
+        <canvas id="myChart" width="120" height="120"></canvas>
+    </div>
 
     <form class="form-horizontal">
         <div class="form-group">
@@ -78,7 +114,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="day1">Day 1 Hours:</label>
             <div class="col-sm-10">
-                <input type="number" min="1" max="20"  class="form-control" id="day1" placeholder="Enter No of Hours Worked">
+                <input type="number" min="1" max="20" class="form-control" id="day1" placeholder="Enter No of Hours Worked">
             </div>
         </div>
         <div class="form-group">
@@ -108,7 +144,10 @@
     </form>
     <div id="socket">
         <ul id='dataView'></ul>
+
     </div>
+
+
 </body>
 
 </html>

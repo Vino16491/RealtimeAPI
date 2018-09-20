@@ -126,7 +126,7 @@ io.on('connection', (socket) => {
             if(err){
                 return io.emit('datainput', err)
             }
-            return io.emit('datainput', result)
+            return io.emit('datainput', result.data)
         })
     })
     socket.on('datainput',(msg)=>{
