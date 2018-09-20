@@ -43,9 +43,9 @@ app.use((req, res, next) => {
 });
 /* Get Request */
 /* File to test socket */
-// app.get('/', function (req, res) {
-//     res.sendFile(__dirname + '/index.html');
-// });
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+});
 
 // app.get('/getRealtime', (req, res) => {
 
@@ -110,11 +110,28 @@ io.on('connection', (socket) => {
     socket.on('msgHistory', ()=>{
         console.log('msghistory')
         Data.find().exec((err, msg)=>{
+            
             if(err){
                 return io.emit('msgHistory', err)
             }
             return io.emit('msgHistory', msg)
         })
+    })
+
+    socket.once('dataSave', (data)=>{
+        let socketData = new Data({
+            data: data
+        });
+        socketData.save((err, result)=>{
+            if(err){
+                return io.emit('datainput', err)
+            }
+            return io.emit('datainput', result)
+        })
+    })
+    socket.on('datainput',(msg)=>{
+        console.log(msg);
+        return io.emit('datainput', 'from server')
     })
 })
 

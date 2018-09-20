@@ -2,37 +2,112 @@
 <html>
 
 <head>
-    <title>Socket.IO chat</title>
-    <style>
-    </style>
+    <title>Socket.IO Testing</title>
+    <!-- Bootstrap imports -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+        const socket = io();
+
+        function listenServer() {
+            console.log('function run')
+            socket.emit('datainput', 'pageLoaded');
+
+            socket.on('datainput', (data) => {
+                console.log(data);
+               
+                 document.getElementById('dataView').innerHTML= 
+                     `
+                        <li>hi, Your email id is this ${data.data.email} </li>
+                        <li>Your Day 1 Work is ${data.data.d1}</li>
+                        <li>Your Day 2 Work is ${data.data.d2}</li>
+                        <li>Your Day 3 Work is ${data.data.d3}</li>
+                        <li>Your Day 4 Work is ${data.data.d4}</li>                
+                    `;
+                
+                
+
+
+            });
+        }
+
+
+        function dataSubmit(){
+            
+                let email = document.getElementById("email").value;
+                let day1 = document.getElementById("day1").value;
+                let day2 = document.getElementById("day2").value;
+                let day3 = document.getElementById("day3").value;
+                let day4 = document.getElementById("day4").value;
+                let data = {
+                    email : email,
+                    d1: day1,
+                    d2:day2,
+                    d3:day3,
+                    d4:day4
+                }
+                listenServer();
+           return socket.emit('dataSave', data)
+          
+            
+
+
+        }
     </script>
 </head>
 
 <body>
-    <div>
-        <label for='create'>Create</label>
-        <input onkeyup="create()">
-    </div>
 
-    <div>
-        <label for="read" id="read">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Email:</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" placeholder="Enter email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="day1">Day 1 Hours:</label>
+            <div class="col-sm-10">
+                <input type="number" min="1" max="20"  class="form-control" id="day1" placeholder="Enter No of Hours Worked">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="day2">Day 2 Hours:</label>
+            <div class="col-sm-10">
+                <input type="number" min="1" max="20" class="form-control" id="day2" placeholder="Enter No of Hours Worked">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="day3">Day 3 Hours:</label>
+            <div class="col-sm-10">
+                <input type="number" min="1" max="20" class="form-control" id="day3" placeholder="Enter No of Hours Worked">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="day4">Day 4 Hours:</label>
+            <div class="col-sm-10">
+                <input type="number" min="1" max="20" class="form-control" id="day4" placeholder="Enter No of Hours Worked">
+            </div>
+        </div>
 
-        </label>
-    </div>
-    <div>
-        <label for="update">
-
-        </label>
-        <input onkeyup="update()" id="update">
-    </div>
-    <div>
-        <label for="delete">
-
-        </label>
-        <input onkeyup="deleteData()" id="update">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" onclick="dataSubmit()">Submit</button>
+            </div>
+        </div>
+    </form>
+    <div id="socket">
+        <ul id='dataView'></ul>
     </div>
 </body>
 
