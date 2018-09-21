@@ -58,7 +58,7 @@
                     d3:day3,
                     d4:day4
                 }
-                if(data.email.length>0){
+                if(data.email.length>0 && data.d1.length>0 && data.d2.length>0){
                     listenServer();
                     return socket.emit('dataSave', data)
                 }else{
