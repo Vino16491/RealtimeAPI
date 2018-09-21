@@ -46,8 +46,8 @@
 
         function dataSubmit(){
             
-                let email = document.getElementById("email").value;
-                let day1 = document.getElementById("day1").value;
+            let email = document.getElementById("email").value;
+            let day1 = document.getElementById("day1").value;
                 let day2 = document.getElementById("day2").value;
                 let day3 = document.getElementById("day3").value;
                 let day4 = document.getElementById("day4").value;
@@ -58,8 +58,13 @@
                     d3:day3,
                     d4:day4
                 }
-                listenServer();
-           return socket.emit('dataSave', data)
+                if(data.email.length>0){
+                    listenServer();
+                    return socket.emit('dataSave', data)
+                }else{
+                    return alert('please add email');
+                }
+                
           
         }
 
